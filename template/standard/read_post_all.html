@@ -1,0 +1,44 @@
+{% extends 'standard/base.html' %}
+
+{% block content %}
+<div id="path" class="header-title"> 
+  <a href="/{{board.filename}}/{% if www.def_mode == 1 %}topic/{% endif %}">
+    &laquo;{{board.filename}}{{board.title}}
+  </a>
+</div>
+<div id="topic-row" > 
+  <h1 class="post-title">文章主题：{{post_title}} </h1>   
+</div>
+
+
+<div id="read-wrap">
+  {% if !exist %}
+  文章不存在或已被删除。
+  {% endif %}
+</div>
+<div id="read-more" style="display: none">
+    查看更多
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  topicFiles = [];
+  useridArray = [];
+  need_to_hide = 0;
+  islogin = {{ islogin }}
+
+  {% for file in files %}
+  topicFiles.push('{{file.filename}}');
+  useridArray.push('{{file.userid}}');
+  {% endfor %}
+
+  currBoard = '{{ board.filename }}';
+  currIndex = 0;
+  nextBound = 0;
+  loadStep = 30;
+  readPost(0);
+</script>
+{% endblock %}

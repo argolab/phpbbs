@@ -1,0 +1,52 @@
+{% extends 'standard/base.html' %}
+
+{% block content %}
+<div id="online-friend">
+<div class="header-title">
+  &laquo; 好友动态
+</div>
+
+  <div class="feed-all-friend">
+  <a  href="/profile/setting/friends/">查看所有好友&raquo;</a>
+</div>
+<ul  id="feed-wrap"> 
+  {% if !friend_feed %}
+      亲！(O ^ ~ ^ O) 最近几天没有好友发帖哦，赶紧去召唤他们吧！
+  {% endif %}
+  {% for ff in friend_feed %}
+        <li  class="feed-entry">
+            <div class="user-icon-column">
+              {% if ff.myface %}
+              <img src="{{ff.myface}}" class="user-icon" alt="{{ff.userid}}"/>
+              {% else %}
+              <img src="/images/gcc.jpg" class="user-icon" alt="gcc"/>
+              {% endif %}
+            </div>
+            <div class="feed-column">
+              <div class="feed-main-content">
+              <a href="/profile/query/{{ ff.userid }}/">{{ ff.userid }}</a> 在 
+              <a href="/{{ ff.board }}/">{{ ff.board }}</a> 版 <font class="feed-board">{{ ff.title }}</font> 中提到：<a href="/{{ ff.board }}/{{ ff.filename }}/" class="feed-bottom">传送门&raquo;</a><br/> {{ ff.digest | safe  }}              
+              </div>
+              <div class="feed-control">
+              <div class="feed-time"> 
+                {{ ff.post_time }}
+                </div>
+              <div class="feed-bottom">                
+                  <a id="reply-{{ ff.nodot_id }}" board="{{ ff.board }}" href="javascript:;">快速回复</a>
+              </div>
+              </div>
+            </div>
+        </li>
+  {% endfor %}
+</ul>
+
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+ initOnlineFriend(); 
+</script>
+{% endblock %}

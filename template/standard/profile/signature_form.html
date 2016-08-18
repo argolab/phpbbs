@@ -1,0 +1,20 @@
+{% extends 'standard/base2.html' %}
+{% block content %}
+<div id="setting-banner">
+  修改签名档
+</div>
+<div id="signature-setting">
+  <form method="POST" id="signature-form" action="/profile/setting/signature/">
+    <div class="content-row">    
+    <textarea id="id-content" name="signature" rows="15" cols="70" >{{signature | safe}}</textarea>
+    </div>   
+    <div class="signature-explain">
+        *签名档每6行一个，可设多个
+    </div> 
+  </form>
+  <div id="setting-button">
+        <input id="id_save_button" type="button" onclick="javascript:ajaxSettingSubmit();" value="保存" />
+  </div>
+</div>
+
+{% endblock %}

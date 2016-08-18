@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>{% block title %} 逸仙时空 Yat-sen Channel {% endblock %} </title>
+  </head>
+  <body>
+    <div id="setting-banner">
+      {{urec.userid}} 的信息
+      </div>
+    <div id="info-setting">
+      <form method="post" action="/profile/setting/info" id="info-form">
+	<ul class="info-list">
+	  {% if urec.myface %}
+	  <li class="uicon"> <img class="user-icon" src="{{ urec.myface }}" alt="{{ urec.userid }}"/></li>
+	  {% endif %}
+	  <li>欢迎您，{{urec.userid}} </li>
+	  <li>更改头像：<input type="file" id="id_myface" name="myface" id="upload-myface"/></li>
+	  <li>您的昵称：<input type="text" id="id_username" name="username" value="{{urec.username}}" size="24" maxlength="22"/></li>
+	  {% if urec.usertitle %} 
+	  <li>您的称号：{{urec.usertitle}}</li>
+	  {% endif %}
+	  <li>发表大作：{{urec.numposts}} 篇</li>
+	  <li>邮件总数：{{urec.nummails}} 篇</li>
+	  <li>上站次数：{{urec.numlogins}} 次</li>
+	  <li>上站时间：{{urec.stay}} 分钟</li>
+	  <li>真实姓名：<input type="text" id="id_realname" name="realname" value="{{urec.realname}}" size="16" maxlength="16"/></li>
+	  <li>账号建立：{{urec.firstlogin}}</li>
+	  <li>最近光临：{{urec.lastlogin}}</li>
+	  <li>来源地址：{{urec.lasthost}}</li>
+	  <li>出生日期：
+	    <select id="id_birthyear" name="birthyear">
+	      {% for y in years %}
+	      <option value="19{{y}}" {% if urec.birthyear == y %}selected{% endif %}>19{{y}}</option>
+	      {% endfor %}
+	    </select>
+	    年
+	    <select id="id_birthmonth" name="birthmonth">
+	      {% for mon in mons %}
+	      <option value="{{mon}}" {% if urec.birthmonth == mon %}selected{% endif %}>{{mon}}</option>
+	      {% endfor %}
+	    </select>
+	    月
+	    <select id="id_birthday" name="birthday">
+	      {% for day in days %}
+	      <option value="{{day}}" {% if urec.birthday == day %}selected{% endif %}>{{day}}</option>
+	      {% endfor %}
+	    </select>
+	    日
+	  </li>
+	  <li>性别：
+	    男<input id="id_gender_M" type="radio" value="M" name="gender" {% if urec.male %}checked="checked"{% endif %} />
+	    女<input type="radio" value="F" name="gender" {% if not urec.male %}checked="checked"{% endif %} />
+	  </li>
+	</ul>
+      </form>
+      <div id="setting-button">
+  <input id="id_save_button" type="button" onclick="javascript:ajaxSettingSubmit();" value="保存" />
+</div>
+    </div>
+  </body>
+</html>

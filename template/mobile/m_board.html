@@ -1,0 +1,30 @@
+{% extends 'mobile/m_base.html' %}
+{% block script %}
+<script type="text/javascript">
+  page_init_code = 'init_brds()';
+</script>
+{% endblock %}
+{% block content %}
+<section id="secs">
+  <div id="section-container">
+    <ul>
+      {% for sec in secs %}
+      <li class="section" id="sec_{{ sec.seccode }}">
+	<div class="sec_title sec_status_close">
+	  {{ loop.counter0 }}Çø {{ sec.secname }}
+	  <div class="triangle"> </div>
+	</div>
+	<div class="boards_hidden">
+	  {% for brd in sec.brds %}
+	  <div onclick="window.location = '/m/{{ brd.filename }}';">
+	    {{ brd.title }}<span class="board-ename">[{{ brd.filename }}]</span>
+	    <span class="lastpost">¸üÐÂ:{{  brd.lastpost }}</span>
+	  </div>
+	  {% endfor %}
+	</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

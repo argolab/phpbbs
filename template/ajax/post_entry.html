@@ -1,0 +1,81 @@
+<div class="post-entry"> 
+  <table class="post-entry-table">
+
+    <tr class = "main-content">
+      <td class ="user-icon-column">
+	    {% if post.myface %}
+	    <img src="/avatar/{{post.userid}}" class="user-icon" alt="{{post.userid}}"/>
+	    {% else %}
+	    <img src="/images/gcc.jpg" class="user-icon" alt="gcc"/>
+	    {% endif %}
+      </td>
+
+      <td class="post-column">
+	    <div class="control-top">
+	      <div class="post-author">
+	        <a id="{{post.userid}}-{{nodot_id}}" href="/profile/query/{{post.userid}}" class="userid">{{post.userid}}</a>
+	        <span class="username">[{{post.username}}]</span>
+	        <span class="post-time">发表于 {{post.post_time}}</span>
+	      </div>
+	      <div class="control-button">
+            {% if login %}
+	        <a id="copy-{{nodot_id}}" href="javascript:;">转载</a>
+	        
+            {% endif %}
+	        {% if perm_del %}
+	        | <a id="edit-{{nodot_id}}" href="javascript:;">编辑</a>	        
+	        | <a id="del-{{nodot_id}}" href="javascript:;">删除</a>	        
+	        {% endif %}
+
+            {% if has_bm_perm %}
+            | <a id="recom-{{nodot_id}}" href="javascript:;">推荐到首页</a>
+            {% endif %}
+	        <span class="thread">|</span>
+	        <a class="thread" href="/{{ board }}/t/{{post.filename}}">同主题阅读</a>
+
+            <span id="share-text-{{nodot_id}}" href="javascript:;" >
+              | <a  class="share-text-link" href="javascript:;">分享</a>
+              <span class="share-row-hidden" id="share-row-{{nodot_id}}" >
+		        <img  class="share-icon" id="share-sina-{{nodot_id}}" alt="分享到新浪微博" src="http://www.sinaimg.cn/blog/developer/wiki/16x16.png" />
+		        <img class="share-icon" id="share-renren-{{nodot_id}}" alt="分享到人人网" src="http://wiki.dev.renren.com/mediawiki/images/b/bd/Logo16.png" />
+		        <img class="share-icon" id="share-qq-{{nodot_id}}" alt="分享到腾讯微博" src="http://v.t.qq.com/share/images/s/weiboicon16.png" />
+		        <img class="share-icon" id="share-douban-{{nodot_id}}" alt="分享到豆瓣" src="http://img2.douban.com/pics/fw2douban_s.png" />
+              </span>
+            </span>     
+          </div>
+
+	      <div class="post-control-group">
+            <div id="prev-post-{{nodot_id}}" class="post-dir-button">▲</div>
+            <div id="next-post-{{nodot_id}}" class="post-dir-button">▼</div>
+	      </div>
+	    </div>
+	    <div class="post-index" id="post-index-{{nodot_id}}"></div>
+
+	    <div class="post-content">
+	      {{post.content | safe  }}
+	    </div>
+	    <div class="post-signature">
+	      --<br/>
+	      {{post.signature | safe }}
+	    </div>
+	    {% if post.ah.filename %}
+	    <div class="post-attach">
+	      本帖包含附件：<a href="javascript:;" onclick="javascript:window.open('{{post.ah.link}}', '_blank')">{{ post.ah.origname }} </a><br/>
+	      {% if post.ah.is_picture %} 
+	      <img class="attach_picture" src="{{post.ah.link}}" />
+	      {% endif %}
+	    </div>
+	    {% endif %}
+	    <div class="control-bottom">
+	      <a id="expand-{{nodot_id}}" class="expand-button">展开↓</a>
+	      <a id="reply-{{nodot_id}}" class="reply-button">回复</a>
+	    </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<script type="text/javascript" >  
+  share_button("{{nodot_id}}", "{{ post_title}}", "");
+</script>

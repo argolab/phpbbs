@@ -1,0 +1,31 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div id="login">
+    <div class="head-title">{{ message }} </div>
+  <form method="POST" id="login-form" action="/login/">
+    <div class="text-row">
+	  <label for="id-username">帐　号：</label> <input class="login-text" type="text" name="username" id="id-username" />
+    </div>
+    <div class="text-row">
+	  <label for="id-password">密　码：</label> <input class="login-text" type="password" name="password" id="id-password" />
+    </div>
+    <div class="button-row">
+      <input  id="ref" name="ref" type="hidden"/>
+	  <input class="button login-button" type="submit" value="登陆" />
+	  <input type="checkbox" name="auto" value="true" />
+	  <span>记住我</span>
+    </div>
+  </form>
+</div>
+<div id="login-reg">
+  没有帐号？ <br />
+  <a href="/reg/">注册</a>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+/*   alert(window.location.hash); */
+  $("#login #ref").attr("value", window.location.hash.substr(2));
+</script>
+{% endblock %}

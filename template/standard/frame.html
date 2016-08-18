@@ -1,0 +1,45 @@
+{% extends 'standard/frame_base.html' %}
+
+{% block main %}
+<div id="side-nav">
+  <div id="profile">
+    <img src="/avatar/{{ userid }}" class="user-icon" alt="{{ userid }}" />
+    <div>
+      {% if login %}
+      <p>用户：{{userid}}</p>
+      <p>级别：{{ userlevel }}</p> 
+      {% else %}
+      <p>用户：guest</p>
+      <p>级别：游客</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="nav-container">
+      <a class="item item-home" href="/main/">首页</a>
+      <a class="item item-sec" href="/sec/">分类讨论区</a>
+    <a class="item item-ann" href="/ann/">本站精华区</a>
+    <a class="item item-corpus" href="/ann/boards/Personal_corpus/">个人文集区</a>
+  </div>
+  {% if login %}
+  <div class="nav-container">
+    <a class="item item-fav" href="/fav/">收藏夹</a>
+    <a class="item item-mail" href="/mail/" id="mail-box">信件箱<label id="has-new-mail">(新)</label></a>
+    <a class="item item-friend" href="/profile/online/friends/">好友动态</a>
+    <a class="item item-at" href="/message/" id="message-box">提到我的<label id="has-new-message">(新)</label></a>
+    <a class="item item-attach" href="/attach/list/" >我的附件</a>
+  </div>
+  {% endif %}
+  <div class="nav-container">
+    <!-- <a class="item item-stat" href="/stat/">统计信息</a> -->
+    <a class="item item-faq" href="/faq/">常见问题</a>
+    <a class="item item-hall" href="/hall/">小礼堂</a>
+  </div>   
+
+  <div id="left-info">
+  </div>
+</div> <!-- end side-nav -->
+
+<div id="content-column" class="clearfix">
+</div>
+{% endblock %}
+

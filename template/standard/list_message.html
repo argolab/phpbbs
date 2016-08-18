@@ -1,0 +1,67 @@
+{% extends 'standard/base.html' %}
+
+{% block content %}
+<div id="online-friend">
+<div class="header-title">
+  &laquo; @提到我的
+</div>
+
+<div class="message-banner">
+<div id="message-control">
+   <a href="/message/">最新</a> 
+   <a href="/message/{{prev}}/">往前</a>
+</div>
+</div>
+
+<ul  id="feed-wrap"> 
+  {%  if !mlist %} 
+    还没有人@你呢  ( *^_^* ) ，赶紧@好友试试吧！
+  {% endif %}
+  {% for mh in mlist %}
+        <li  class="feed-entry">
+            <div class="user-icon-column">
+              {% if mh.myface %}
+              <img src="{{mh.myface}}" class="user-icon" alt="{{mh.userid}}"/>
+              {% else %}
+              <img src="/images/gcc.jpg" class="user-icon" alt="gcc"/>
+              {% endif %}
+            </div>
+            <div class="feed-column">
+              <div class="feed-main-content">           
+
+                {% if mh.friend %}
+                <a href="#!/profile/query/{{ mh.userid }}/" id="message-{{mh.index}}"   class="{% if !mh.unread %}message-read{% endif %}">{{mh.userid}} 加你为好友了。</a>
+                {% endif %}                       
+         
+                  {% if mh.at %}
+                <a href="#!/{{mh.board}}/{{mh.filename}}/" id="message-{{mh.index}}"  class="{% if !mh.unread %}message-read{% endif %}">{{mh.userid}} 在 {{mh.board}} 版@提到了你&raquo;</a>                
+                  {% endif %}
+                                
+                  {% if mh.reply %}
+                <a href="#!/{{mh.board}}/{{mh.filename}}/" id="message-{{mh.index}}"  class="{% if !mh.unread %}message-read{% endif %}">{{mh.userid}} 在 {{mh.board}} 版回复了你&raquo;</a>
+                  {% endif %}                         
+                
+                {% if mh.birthday %}
+                <a href="#!/Wishes/" id="message-{{mh.index}}"  class="{% if !mh.unread %}message-read{% endif %}"> Argo 祝您生日快乐！来许个生日愿望吧！</a>
+                {% endif %}
+
+              </div>
+              <div class="feed-control">
+              <div class="feed-time">
+                {{ mh.when }} 
+                </div>
+              </div>
+            </div>
+        </li>
+  {% endfor %}
+</ul>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  message_init();
+</script>
+{% endblock %}

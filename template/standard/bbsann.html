@@ -1,0 +1,41 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+
+<div class="header-title">
+  <a href="javascript:history.go(-1)">  &laquo; 返回上一层 </a>
+</div>
+
+<div id="board-wrapper" class="clearfix">
+  <div id="board-nav">
+    <ul class="clearfix">
+      <li class="selected ui-corner-top"><a href="/ann/boards/{{board.filename}}/">精华区</a></li>      
+      <!-- <li class="default ui-corner-top"><a href="/{{board.filename}}/digest/">文摘区</a></li>
+      <li class="default ui-corner-top"><a href="/{{board.filename}}/topic/">同主题</a></li>
+      <li class="default ui-corner-top"><a href="/{{board.filename}}/">普通</a></li> -->
+    </ul>
+  </div>
+
+  <div>
+<ul id="post-list">
+      <li class="post-list-header">
+	    <div class="lindex">序号</div>
+        <div class="lflag">类别</div>
+	    <div class="ltitle">标题</div>
+	    <div class="lowner">作者</div>        
+	    <div class="lupdate">最后更新</div>
+      </li>
+
+    {% for idx, ann in annlist %}
+      <li class="post-list-body{% cycle ' post-list-bgcolor-blue' '' %}">
+        <div class="lindex">{{idx}}</div>
+        <div class="lflag">{{ ann.flag }}</div>
+        <div class="ltitle"><a href="{{ ann.url }}">{{ ann.title }}</a></div>
+        <div class="lowner">{{ ann.editor }}</div>
+        <div class="lupdate">{{ ann.mtime }}</div>
+    </li>
+    {% endfor %}
+</ul>
+  </div>
+
+</div>
+{% endblock %}

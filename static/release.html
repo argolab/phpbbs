@@ -1,0 +1,33 @@
+<form method="POST" action="/ajax/!release">
+  <h2>Release Jsbbs</h2>
+  <div>
+    commit: <input type="text" name="commit" value="!">
+  </div>
+  <div>
+    sure: <input type="text" name="sure" value="!">
+  </div>
+  <input type="submit" value="submit"/>
+  <pre>
+    预发布到 /n/_t/ ：
+    commit 值为 git commit 的 sha 值， 会回滚到该版本。
+         当指定为 ! 时会更新到最新版。
+
+    正式发布 /n/ :
+    commit == sure 时才会发挥作用。只能指定为 sha 值，
+          否则会不处理正式版本。
+
+    发布流程：
+        commit=! sure=!        ==>  预发布最新版
+        <<<确认发布没有bug>>>
+        commit=$sha sure=$sha  ==>  正式发布，其中sha为最新的commit
+
+    回滚：
+        commit=$sha sure=$sha  ==>  _t 和 线上都切换回 $sha
+        commit=$sha sure=!     ==>  _t 切换回 $sha ， 线下不更改
+  </pre>    
+</form>
+<br>
+<form method="POST" action="/ajax/!release_phpbbs">
+  <h2>Update phpbbs</h2>
+  <input type="submit" value="submit"/>
+</form>

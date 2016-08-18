@@ -1,0 +1,119 @@
+{% extends 'standard/base.html' %}
+
+{% block content %}
+<div class="board-title-row">
+  <span class="BM-row">  版主：
+    {% if board.BM %} 
+
+    {% for bm in board.BM %}    
+    <a href="/profile/query/{{ bm}}/">{{ bm }}  </a>
+    {% endfor %}
+    
+    {% else %} 
+    诚招版主 *^~^*
+    {% endif %}
+  </span>
+  <div class="header-title">
+    <span>{{ board.filename }}（{{ board.title }}）版&raquo;</span>  
+  </div>
+</div>
+
+<div id="board-wrapper" class="clearfix">
+  <div id="post-button"><a href="javascript:;"> 发表话题 </a></div>  
+  <div id="board-nav">
+    <ul class="clearfix">
+      
+      <li class="default ui-corner-top"><a href="/ann/boards/{{board.filename}}/">精华区</a></li>      
+
+      {% if isdigest %}     
+      <li class="selected ui-corner-top"><a href="/{{board.filename}}/digest/">文摘区</a></li>
+      {% else %}
+      <li class="default ui-corner-top"><a href="/{{board.filename}}/digest/">文摘区</a></li>
+      {% endif %}
+
+      {% if istopic %}
+      <li class="selected ui-corner-top"><a href="/{{board.filename}}/topic/">同主题</a></li>
+      {% else %}
+      <li class="default ui-corner-top"><a href="/{{board.filename}}/topic/">同主题</a></li>
+      {% endif %}
+
+      {% if isnormal %}
+      <li class="selected ui-corner-top"><a href="/{{board.filename}}/">普通</a></li>
+      {% else %}
+      <li class="default ui-corner-top"><a href="/{{board.filename}}/">普通</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  <div>
+    <ul id="post-list">
+      <li class="post-list-header">
+	    <div class="lindex">序号</div>
+        <div class="lflag">标记</div>
+	    <div class="ltitle">主题</div>
+	    <div class="lowner">作者</div>        
+	    <div class="lupdate">时间</div>
+      </li>
+  
+
+      {% for post in plist %}
+      <li class="post-list-body{% cycle ' post-list-bgcolor-blue' '' %}">
+	    <div class="lindex">{{ post.index }}</div>
+	    <div class="lflag">{{ post.mark }}</div>
+	    <div class="ltitle">
+	      {% if istopic %}
+              <a href="/{{board.filename}}/t/{{post.filename}}/">{{ post.title }}</a><span class="lreply">(回复{{ post.total_reply }})</span>
+              {%  else %}
+	      <a href="/{{board.filename}}/{{post.filename}}/">{{ post.title }}</a> 
+              {% endif %}
+	    </div>
+
+	    <div class="lowner">
+	      <a href="/profile/query/{{post.owner}}">{{ post.owner }}</a>
+	    </div>       
+
+        <div class="lupdate">
+	      {{ post.update }}
+	    </div>
+      </li>
+      {% endfor %}
+
+    </ul>
+  </div>
+  <div id="pagectrl">
+
+    {% if login %}
+    <div id="markread">
+      <a href="javascript:;">清除未读标记</a>
+    </div>
+    {% endif %}
+
+    {% if istopic %}
+    <a href="/{{board.filename}}/topic/1/">首页</a>
+    <a href="/{{board.filename}}/topic/{{prev}}/">上一页</a>
+    <a href="/{{board.filename}}/topic/{{next}}/">下一页</a>
+    <a href="/{{board.filename}}/topic/">末页</a>
+    {% endif %}
+    {% if isnormal %}
+    <a href="/{{board.filename}}/1/">首页</a>
+    <a href="/{{board.filename}}/{{prev}}/">上一页</a>
+    <a href="/{{board.filename}}/{{next}}/">下一页</a>
+    <a href="/{{board.filename}}/">末页</a>
+    {% endif %}
+    {% if isdigest %}
+    <a href="/{{board.filename}}/digest/1/">首页</a>
+    <a href="/{{board.filename}}/digest/{{prev}}/">上一页</a>
+    <a href="/{{board.filename}}/digest/{{next}}/">下一页</a>
+    <a href="/{{board.filename}}/digest/">末页</a>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  currBoard = "{{board.filename}}";
+  islogin = {{ islogin }}
+  renderPostList();
+</script>
+{% endblock %}

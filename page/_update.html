@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>更新静态文件</title>
+    <script src="http://argo.sysu.edu.cn/n/js/lib/jquery.js"></script>    
+    <style>
+      #path{ width: 300px; } #submit{width: 400px;}
+      textarea{ height: 500px; width: 400px;}
+    </style>    
+  </head>
+  <body>
+    <form action="/ajax/page/update" method="POST">
+      路径：<br/>
+      <input id="path" name="path" type="text" /> &nbsp;
+      <a href="javascript:loadData(); " onclick="loadData"><small>点我抓取</small></a>
+      <br/>
+      内容：<br/>
+      <textarea id="content" name="content" type="text"></textarea> <br/>
+      <input id="submit" type="submit" value="更新" />
+    </form>
+    <script>
+      function loadData(){
+          console.log('!', 'http://argo.sysu.edu.cn/p/' + $('#path').val());
+          if(!$('#path').val().length){
+              alert('还没填写路径！');
+              return;
+          }
+          if($('#content').val().length){
+              if(!confirm('内存区还有内容，确认覆盖？')) return;
+          }
+          $.ajax({
+              type: 'GET',
+              url: 'http://argo.sysu.edu.cn/p/' + $('#path').val(),
+              dataType: 'text',
+              success: function(data){
+                  $('#content').val(data);
+              }
+          });
+      }
+    </script>
+  </body>
+</html>

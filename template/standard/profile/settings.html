@@ -1,0 +1,52 @@
+{% extends 'standard/frame_base.html' %}
+
+{% block title %} 用户设置 -- 逸仙时空 Yat-sen Channel {% endblock %}
+
+{% block css %}
+<link href="/css/jquery-ui-1.8.7.custom.css" rel="stylesheet" type="text/css" />
+<link href="/css/index.css" rel="stylesheet" type="text/css" />
+<link href="/css/profile.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+<div id="setting-column">
+  <ul class="all-setting">
+    <li id="setting-info" class="setting-item bg-item">
+      <a href="javascript:;" class="">基本信息</a>
+    </li>
+    <li id="setting-passwd" class="setting-item bg-item">
+      <a href="javascript:;">修改密码</a>
+    </li>
+    <li id="setting-plan" class="setting-item bg-item">
+      <a href="javascript:;">个人说明档</a>
+    </li>
+    <li id="setting-signature" class="setting-item bg-item">
+      <a href="javascript:;">签名档</a>
+    </li>
+    <li id="setting-www" class="setting-item  bg-item">
+      <a href="javascript:;">参数设置</a>
+    </li>
+    <li id="setting-friends" class="setting-item bg-item">
+      <a href="javascript:;">设定好友</a>
+    </li>
+    <li id="setting-rejects" class="setting-item  bg-item">
+      <a href="javascript:;">设定坏人</a>
+    </li>
+    <li  class="setting-item bg-item">
+      <a href="/main/">&laquo;返回</a>
+    </li>
+    <li id="left-info">
+      </li>
+  </ul>
+</div>
+<div id="setting-content">
+  <!-- ajax load content -->
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  $("#setting-content").load("/profile/setting/info/");
+  initSetting();
+</script>
+{% endblock %}

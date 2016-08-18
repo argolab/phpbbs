@@ -1,0 +1,24 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>第三方网站确认身份 - 逸仙时空</title>
+    <link href="http://bbs.sysu.edu.cn/p/r2.css" rel="stylesheet"
+          type="text/css" />
+  </head>
+  <body>
+    <div style="padding: 60px; margin: auto; width: 400px;">
+      <h2>确认要让 <i style="color: rgb(100,200,120)">{{ host }}</i> 知道你是 {{ userid }} 吗？</h2>
+      {% if issysu %}
+      <p>这个网站来自中山大学</p>
+      <a href="{{ref}}" class="btn">确认我的身份</a>
+      <a href="http://bbs.sysu.edu.cn">回到逸仙时空首页</a>
+      {% else %}
+      <p style="color:rgb(200,100,120)">这个网站不来自中山大学，可能会引起你的隐私泄漏！
+        <br>
+        <a href="http://bbs.sysu.edu.cn" class="btn">回到逸仙时空首页</a>
+        <a href="{{ref}}">确认我的身份</a>
+      </p>
+      {% endif %}
+    </div>
+  </body>
+</html>

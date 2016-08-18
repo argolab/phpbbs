@@ -1,0 +1,193 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div id="notification">
+  <!-- {% if not login %}
+       你可以注册一个帐号，并登录，随时发表观点，与大家交流。
+       {% endif %} -->
+</div>
+<div id="sysop-bar">
+  ★系统公告★：新版Argo正在测试中，欢迎到<a href="/BugReport/">BugReport</a>提供建议 ~^ο^~
+</div>
+
+<div id="right-column">
+
+  <div id="active" class="rcolumn-widget">
+    <div class="rcolumn-widget-header">
+      <span class="header-title">近期活动 </span>
+    </div>
+    <div>
+      <ul>
+	<li><a href="/Travel/topic/" class="main-link">游走报名</a>(Travel) &raquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="rec-boards" class="rcolumn-widget">
+    <div class="rcolumn-widget-header">
+      <span class="header-title">推荐版面 </span>
+    </div>
+    <div id="rec-boards-list">
+      <ul>
+	<li><a href="/ACMICPC/topic/" class="main-link">程序设计竞赛</a>(ACMICPC)&raquo;</li>
+	<li><a href="/BBS_Help/topic/" class="main-link">BBS使用求助 </a>(Help) &raquo;</li>
+	<li><a href="/Linux/topic/" class="main-link">Coolest Unix </a>(Linux) &raquo;</li>
+	<li><a href="/Story/topic/" class="main-link">逸仙书路 </a>(Story) &raquo;</li>
+	<li><a href="/Astrology/topic/" class="main-link">星座物语 </a>(Astrology) &raquo;</li>
+	<li><a href="/Hardware/topic/" class="main-link">硬件点滴</a>(Hardware) &raquo;</li>
+	<li><a href="/Official/topic/" class="main-link">公务员版 </a>(Official) &raquo;</li>
+	<li><a href="/Lecture/topic/" class="main-link">讲座专栏 </a>(Lecture) &raquo;</li>
+	<li><a href="/Memory/topic/" class="main-link">时光流转 </a>(Memory) &raquo;</li>
+	<li><a href="/CS/topic/" class="main-link">计算机系 </a>(CS) &raquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="hot-boards" class="rcolumn-widget">
+    <div class="rcolumn-widget-header">
+      <span class="header-title">人气排名 </span>
+    </div>
+    <div id="hot-boards-list">
+      <ul>
+        <li><a href="/Employee/topic/" class="main-link">上班一族 </a>(Employee)&raquo;</li>
+        <li><a href="/water/" class="main-link">你一瓢来我一瓢</a>(water) &raquo;</li>
+	    <li><a href="/News/topic/" class="main-link">今日世界</a>(News) &raquo;</li>	    
+	    <li><a href="/Say/topic/" class="main-link">不吐不快 </a>(Say) &raquo;</li>
+	    <li><a href="/Argobridge/topic/" class="main-link">相约逸仙</a>(Argobridge) &raquo;</li>
+	    <li><a href="/Job/topic/" class="main-link">人才市场</a>(Job) &raquo;</li>
+	    <li><a href="/Girls/" class="main-link">女孩子 </a>(Girls) &raquo;</li>
+	    <li><a href="/Joke/" class="main-link">每日笑一笑 </a>(Joke) &raquo;</li>
+	    <li><a href="/Love/topic/" class="main-link">爱是我们的责任 </a>(Love) &raquo;</li>	    
+	    <li><a href="/Stock/" class="main-link">股海风云 </a>(Stock) &raquo;</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!--
+    {% if not login %}
+    <div id="advertisement">
+      <div class="header-title">Argo &raquo;</div>
+      <a href="http://www.hudong.com/wiki/%E5%8D%97%E8%88%B9%E5%BA%A7"><img src="/images/argo_boat.jpg" width="450px" id="boat"/> </a>
+    </div>
+    {% endif %} 
+    -->
+<div id="hot-tabs" class="ccolumn-widget">
+  <div class="ccolumn-widget-header">
+    <span class="header-title">最近关注 &raquo;</span>
+  </div>
+  <ul>
+    <li><a href="#top-ten-tab">今日十大</a></li>
+    <li><a href="#job-info">招聘信息</a></li>
+    <li><a href="#recom-topic">推荐话题</a></li>	
+    <li><a href="#campus-suggestion">校园建设</a></li>	
+    <li><a href="#community-activity">社团活动</a></li>	
+    
+  </ul>
+
+  <!-- 十大 -->
+  <div id="top-ten-tab">        
+    <ul>
+    {% for i in top %}
+    <li>
+      <a href="/{{i.board}}/t/{{i.filename}}" class="top-ten-title">{{ i.title }}  &raquo;</a>        
+      <a href="/{{ i.board }}/topic/" class="top-ten-board"> [{{ i.board }}] </a>        
+      <span class="hot-temperature {{ i.color }}"> {{ i.num }} ℃  </span>        
+    </li>
+    {% endfor %}
+    </ul>
+  </div> 
+        <ul>
+  <!-- 招聘信息 -->
+  <div id="job-info">
+    <ul>
+    {% for i in jobs %}
+    <li>
+      <a href="/Job/t/{{i.filename}}" >{{ i.title }} &raquo;</a>
+      <span class="time-stamp">[{{ i.update }}]</span>
+    </li>
+    {% endfor %}
+    </ul>
+    <a href="/job/topic/" class="more">查看更多&raquo; </a>
+  </div>
+        </ul>
+  <!-- 推荐话题 -->
+  <div id="recom-topic" class="recom">
+    <ul>
+    {% for i in recom_topic %}
+    <li>
+      <a href="/{{ i.bname }}/t/{{i.filename}}" >{{ i.title }} &raquo;</a>
+      <span class="time-stamp">[{{ i.time }}]</span>
+      <span class="recomer"><a href="/profile/query/{{ i.recomer }}">{{ i.recomer }}</a>推荐</span>
+    </li>
+    {% endfor %}
+    </ul>
+  </div>
+
+  <!-- 校园建设-->
+  <div id="campus-suggestion" class="recom">     
+    <ul>
+    {% for i in camp %}
+    <li>
+      <a href="/{{ i.bname }}/t/{{i.filename}}" >{{ i.title }} &raquo;</a>
+      <span class="time-stamp">[{{ i.time }}]</span>
+      <span class="recomer"><a href="/profile/query/{{ i.recomer }}">{{ i.recomer }}</a>推荐</span>
+    </li>
+    {% endfor %}
+    </ul>
+  </div>
+        <ul>
+  <!-- 社团活动-->
+  <div id="community-activity" class="recom"> 
+    <ul>
+    {% for i in community %}
+    <li>
+      <a href="/{{ i.bname }}/t/{{i.filename}}" >{{ i.title }} &raquo;</a>
+      <span class="time-stamp">[{{ i.time }}]</span>
+      <span class="recomer"><a href="/profile/query/{{ i.recomer }}">{{ i.recomer }}</a>推荐</span>
+    </li>
+    {% endfor %}
+    </ul>
+  </div>
+
+  
+
+  
+</div>
+      
+
+<div id="recommend" class="ccolumn-widget">
+  <div class="ccolumn-widget-header">
+    <span class="header-title">推荐文章 &raquo;</span> 
+  </div>
+  {% for r in rem %}
+  <div class="recommend-entry">
+    <a href="/Recommend/{{ r.filename }}" class="recommend-title">{{r.title}} </a>
+    <p class="recommend-content">
+      {{ r.content }}
+    </p>
+    <div class="recommend-author">来自<a href="/profile/query/{{ r.owner }}" class="recommend-author-link">{{ r.owner }}</a></div>
+  </div>
+  {% endfor %}
+  <a href="/Recommend/" class="more">查看更多 &raquo;</a> 
+</div> <!-- end recommand -->
+
+<div id="birthday" class="ccolumn-widget">
+  <div class="ccolumn-widget-header">
+    <span class="header-title">生日快乐 &raquo;</span>
+  </div>
+  <div id="birthday-body">
+    {% for user in birthday %}
+    <a href="/profile/query/{{ user }}">{{ user }} </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  $('#hot-tabs').tabs();
+  $('#info-bar').corner('4px');
+  $('.rcolumn-widget-header').corner('3px');
+  initMain();
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="gbk" />
+    <title>逸仙时空</title>
+    <link rel="stylesheet" type="text/css" href="{{static_css}}" />
+  </head>
+  <body>
+    <div class="topic clr">
+      <div class="container">
+        <div class="container-inner">
+          <div class="sitebar clr">
+            <h1 class="brand"><a href="/m/">逸仙时空</a></h1>
+          </div>
+          <div class="header">
+            <h2>{{ topic.title }}</h2>
+            <img src="http://argo.sysu.edu.cn/avatar/{{topic.userid}}"
+                 class="avatar" title="{{topic.userid}}" />
+            <span class="userid">{{topic.userid}}</span>
+          </div>
+          <div class="content">
+            <pre class="markup">{{topic.rawcontent}}</pre>
+          </div>
+          <div class="bottom">
+            <span class="time">{{topic.post_time}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if replys %}
+    <div class="replys">
+      <div class="container">
+        <div class="container-inner">
+          {% for p in replys %}
+          <div class="reply clr{% if p.short %} short{% endif %}">
+            <div class="reply-inner">
+              <div class="header">
+                <img src="http://argo.sysu.edu.cn/avatar/{{p.userid}}"
+                     class="avatar" title="{{p.userid}}" />
+                <span class="userid">{{p.userid}}</span>
+              </div>
+              <div class="content">
+                <pre class="markup">{{p.rawcontent}}</pre>
+              </div>
+              <div class="bottom">
+                <span class="time">{{p.post_time}}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <br>
+        <a href="http://bbs.sysu.edu.cn/n/index.html#!topic?boardname={{boardname}}&&filename={{filename}}">
+          进入新版阅读原文</a>
+      </div>
+    </div>
+    {% endif %}
+    <div class="footer">
+      @逸仙时空
+    </div>
+    <script src="{{static_js}}"></script>
+  </body>
+</html>

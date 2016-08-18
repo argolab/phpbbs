@@ -1,0 +1,67 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div class="header-title">
+   附件管理&raquo;
+</div>
+
+<div id="mail-container">
+  <div class="mail-control">
+
+    <div class="mail-button-group">
+      <label class="common-button" id="attach-checkall">
+	    <input type="checkbox" />全选
+      </label>
+
+        <label class="common-button" id="attach-delete">删除</label>
+
+      <label class="common-button" id="upload-attach">上传附件 </label>
+      <label id="attach-notify" style="display: none">单个附件不超过5M</label>
+      
+      <div class="mail-button-group" id="attach-page-switch">
+      <div class="mail-button" id="attach-prev" jump="{{ prev }}">
+	    <img src="/images/cleardot.gif"  />
+      </div>
+      <div class="mail-button" id="attach-next" jump="{{ next }}">
+	    <img src="/images/cleardot.gif"  />
+      </div>      
+      </div>
+
+  </div>
+  <table id="attach-table">    
+    <thead class="attach-head">
+      <tr>
+        <td></td>
+        <td class="attach-head-index">序号</td>
+        <td class="attach-head-origname">文件名</td>
+        <td class="attach-head-type"></td>
+        <td class="attach-head-size">文件大小</td>
+        <td class="attach-head-tab">备注</td>
+      </tr>
+    </thead>
+    <tbody class="attach-body">
+    {% for ah in ahlist %}
+    <tr>
+      <td class="attach-check"><input type="checkbox" value="{{  ah.index }}"/></td>
+      <td class="attach-index">{{ ah.index }}</td>
+      <td class="attach-origname"><a href="javascript:;" onclick="javascript:window.open('{{ah.link}}', '_blank')">{{ ah.origname }}</a></td>
+      <td class="attach-type"></td>
+      <td class="attach-size">{{ ah.filesize }} </td>      
+      <td class="attach-tab">{% if !ah.articleid %}私有{% endif %}</td>
+      
+    </tr>
+    {% endfor %} 
+    </tbody>
+  </table>  
+  <div id="stat-row">
+    <div>已用空间：{{used_size}} / {{total_size}}</div>    
+  </div>
+  
+  
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  initAttach();
+</script>
+{% endblock %}

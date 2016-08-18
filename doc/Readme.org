@@ -1,0 +1,183 @@
+#+TITLE: 关于argo新web的开发
+
+* 前言
+
+  ...
+  
+* 子目录
+** argo_ext
+   php扩展部分，主要代码代码在argo_ext/src/中。
+   + include
+     原bbs的头文件和php扩展相关的头文件，后者以php_fe开头。
+   + libsys
+     大约是原telnet code的libSytem。
+   + libbs
+     在开发过程中从telnet code复制出来代码。
+   + libhttp
+     web端的公共代码，如ansi到html的转换。
+   + src
+     php扩展的相关代码了
+** inc
+   php代码，放php的公共函数和类。
+** js
+   jquery和页面相关的javascript代码。
+** tpl
+   django-like模板。
+** bbs
+   逻辑层，使用argo_ext和inc中的内容获取bbs的数据，载入tpl中的模板
+   render出最终html代码。
+** dev-bundle
+   开发过程中用到的临时代码。
+
+* 安装
+** 扩展
+   编辑argo_ext/src/include/目录下的config.h和ext_consts.h，设置好bbs路
+   径，然后到argo_ext目录里./configure和make即可。
+** 配置
+   根据具体情况编辑php使用的php.ini，把argo_ext/modules/argo_ext.so加
+   到扩展中，建议先设置好extension_dir，并在具体的extension_dir中创建
+   argo_ext.so的软链接，再设置extension=argo_ext.so，貌似是从php 5.3之
+   后可以直接extension=/path/to/argo_ext.so
+** web环境
+   能运行php的httpd，因人而异了，apache/lighttpd/cherokee等等。 我现在
+   是用nginx，配合php_fpm管理php进程，当然也可以使用spawn-fcgi或直接
+   php-cgi -b /端口/。
+   好像不该这里详解，于是怎么搭配运行起php网页的本地环境，搜索吧。。
+** 注意
+   1. 扩展依赖php，和安装好的bbs_home
+   2. 如果是在64位的机器下，运行需使用32位的php，并且需要设置CFLAGS，具
+      体如CFLAGS="-m32 -g" ./configure 
+   3. 使用apache搭配mod_php的话，apache也要求是32位的。
+   4. 以上对32位的要求是建立在32位的bbs上，如果不使用原argo的内容，64
+      位的也能运行起来。 
+
+* PHP代码的运行过程
+  先介绍一下根目录的两个php文件，再描述一下处理过程。
+** index.php
+   所有请求聚集到index.php中，该文件很简单，包含了该有的基础文件和url处
+   理文件（也属于前者，- -##）。
+   一些初始化代码。
+   建议直接阅读注释。。
+** json.php
+   一些数据利用ajax的方式进行获取，如单个帖子的内容。
+   该文件是判断client的get了些什么东西，然后返回相应的数据，不完全或
+   者说大部分不是json格式.. 
+   另外包含一个函数gtk2utf8,是因为php中json_encode的参数只接受utf8编
+   码，否则一堆null。
+** 假设的运行过程
+   请求都经过index.php，初始化后，然后针对url的请求q=xxx调用bbs目录中的
+   bbsxxx.php（或根目录的json.php，若q=json）文件进行处理，处理的过程
+   通常是根据别的url参数调用php扩展的ext_xxxx函数获取数据，然后利用模
+   板引擎将数据根据tpl目录对应的模板文件进行render后再输出。
+   我把一些处理放到javascript代码中，所以用户的浏览器载入html代码后还
+   会继续有js目录的代码执行，通常是格式处理（如时间转换）或者是json请
+   求。 
+
+* 如何贡献
+** php代码
+   基础代码以及第三方类库都在inc目录中，若有可能常用的代码就添加到该目
+   录再到functions.php或classes.php里requre一下。
+   其它php代码几乎都在bbs目录中，目前我是以旧web的方式命名，如bbsdoc或
+   bbscon加.php，这样方便与原web比较。其中的每个文件代码都不多，应该容
+   易阅读。 
+** php扩展
+   argo_ext目录就是扩展目录了，其中。。
+   在目录/argo_ext/src/src/下，按函数分类组织出不同的文件，如
+   php_func_board.c，可仿照其中的函数添加PHP_FUNCTION，头文件在
+   /argo_ext/src/include/相应的php_func_board.h，仿照添加即可。
+   如果新增文件的话，需要编辑php_func_all.h将新头文件加进去，也需要编
+   辑argo_ext/config.m4加入文件并使用phpize重新生成configure。
+** 模板引擎
+   一直在想怎么做到尽可能的php代码与html分离，嵌套php输出函数，简单的
+   字符串替换，写过部分代码，用过几个第三方小型的引擎，在一次尝试中无
+   意搜索到了很接近django语法的H2O引擎，经过测试比较后拿来使用了。
+   这个引擎比较简单，初始化一个对象，设置好模板地址和数据就行了。
+   简单一个例子。
+   php代码：
+   $tpl = new H2o('/path/to/example.html');
+   $buf = $tpl.render(array('title' => 'welcome', 'content' => 'hello'));
+   echo $buf;
+   html代码：
+   <head>
+   <title> {{ $title }} </title>
+   </head>
+   <body>
+   {% if $content %}
+   <div>{{ $content }}</div>
+   {% endif %}
+   </body>
+   在html代码的编写中，可以用到{% %}和{{ }}括号对，前者称为block，后者
+   tag，block可以做到循环、条件、继承等，而tag除了字符替换还有filter的
+   功能，引擎的良好利用可以很好地实现代码分离和重用，当然也会有性能损
+   失的折衷问题。
+   更详细的使用请参考其样例和[[http://wiki.github.com/speedmax/h2o-php/][文档]]。
+** javascript时代
+   javascript属于不用学的即简单又复杂的语言，不管人们如何议论，得承认
+   javascript在网页开发中确实功能强大也无比实用，尤其是有jQuery等库的
+   存在后。事实上，由于js的灵活，现在它已经走向桌面了，GNOME中有了
+   ##gjs，令人期待的gnome shell就大量使用。KDE由于qt的ECMAScript模块，
+   任何人都可以尝试用js编写plasma插件，前阵子KDE4.4发布时不是顺带有js
+   开发plsma的大赛么。。
+   打住，我想说适当地运行js可以同时减轻服务器和IT民工的负担，也使得网
+   页更柔顺（ajex）。当然，用得太多也会引起问题，我最开始写的时候就陷
+   入一成不变的url，让用户的收藏夹直接失效。。
+** url重写
+   最初就有简化url的想法，把所有的请求集中在一个daemon身上，对url进行
+   分析，进而调用相关的函数处理，比如阅读普通文章的链接可以直接为
+   [[http://argo.sysu.edu.cn/read/Linux/123456789]], 针对argo特制的“路由”
+   还可以把用户状态等信息直接加到其中。
+   我先写了一个简单的样子，仅使用在当路径为/时调用index.php中的index()
+   函数，其它都是直接用index.php?a=x&b=x&c=x的形式，因为我觉得这样有助
+   于开发，当成型后再来设计规则未尝不可。
+
+* 下一步
+  寒假大部分时间都没做什么事，写了这些后我想等到大家确定好或者赞同我的
+  做法再继续了。。 
+
+** 权限控制
+   权限问题的处理很令人头疼，许多细节上都使用到权限验证HAS_PERM，难以
+   高效地统一在PHP代码或扩展C代码中，现在我的想法是
+   permit -> process -> filter
+   其中process为扩展的函数调用，即完全地将权限控制放到PHP层，利用
+   permit（显示该页面的权限）和filter（过滤掉不该显示的数据）来做到权
+   限控制，这样有利于代码编写和安全性控制。显而易见的问题就是效率相对
+   有所降低。
+   大家讨论一下吧，如果没有更好的办法，我按照这种方法先将权限控制部分
+   实现了。
+** 界面设计
+   现在的界面相当于没有界面，原本参考discuz的一个模板，后来不小心把所
+   有的图片删掉了，没再补回去。。所以有点怪异。
+   虽然说www美工负责web界面设计，但是我们也不可能直接要求美工直接完成
+   切片好的完整的网站psd， 所以我需要重新设计一个简洁的界面，再和美工
+   与大家一同改进。
+** 测试
+   前几天架设了一个[[http://argo.0xfff.net][测试站]]，过些时候再添加一个自动更新，欢迎访问、发现、
+   提出问题。。
+   也可以telnet，端口为9494
+** 其它
+   就是大家一起填充式增加功能了。。
+   Comments are welcomed!!
+   另外我想过些时候把服务器的apache卸载了换成nginx，nginx使用
+   proxy_pass反向代理可以把sanry httpd放到另一个本地端口上，那么允许对
+   外的874端口又可以拿来做测试了。
+
+* 手机版
+** 源代码分布
+
+   common/
+
+   mobile/
+   ├── m_index.php
+   ├── m_read.php
+   └── ...
+
+   template/
+   ├── mobile
+   │   ├── m_index.html
+   │   ├── m_read.html
+   │   └── ...
+
+   static/
+   ├── mobile
+   │   ├── style.css
+   │   └── script.js

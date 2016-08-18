@@ -1,0 +1,44 @@
+{% extends 'standard/base2.html' %}
+
+{% block content %}
+<div id="override-setting">
+<div class="override-title">
+  {% if isfriend %}  好友列表 {% else %} 坏人列表  {% endif %}
+</div>
+<div class="override-list">
+  <table class="override-table">
+
+    <thead>
+      <tr  class="override-head">
+      <th class="id-head"> 用户名 </th>
+      <th class="exp-head"> 备注名称 </th>
+      <th>当前状态</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+     {% for over in overrides %}    
+     <tr class="over-list">
+      <td class="id"> <a href="/profile/query/{{over.id}}">{{over.id}} </a> </td> 
+      <td class="exp"> {{over.exp}}</td>
+      <td><font class="new">{{ over.mode }}</font></td>
+      <td class="del-row"><a id="{{over.id}}" class="del-{% if isfriend %}friend{% else %}reject{% endif %}" href="javascript:;"> 删除</a></td>
+     </tr>
+     {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div id="override-bottom">
+  <input class="inputtext" type="text" name="addoverride" maxlength="12" size="12" value=""/> 
+  <div id="add-{% if isfriend %}friend{% else %}reject{% endif %}" class="common-button">添加{% if isfriend %}好友{% else %}坏人{% endif %}</div>  
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+override_list_init();
+
+</script>
+{% endblock %}

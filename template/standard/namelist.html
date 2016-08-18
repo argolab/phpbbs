@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN" >
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="resource-type" content="document" />
+    <meta name="distribution" content="global" />
+    <meta name="author" content="Argo" />
+    <meta name="generator" content="argo@mail.sysu.edu.cn" />
+    <meta name="copyright" content="Copyright (c) 2008-2012 argo. All Rights Reserved." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="rating" content="general" />
+    <title>逸仙时空 - 名单</title>
+    <meta name="keywords" content="逸仙时空, BBS, 中山大学, 学生BBS, argo, 电子公告版, 中东, 珠海校区" />
+    <meta name="description" content="中山大学逸仙时空BBS" />
+    <link href="/n/css/namelist.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <div class="topbar clearfix">
+      <div class="container clearfix">
+        <a href="#" class="brand">逸仙时空 <small>名单</small> </a>
+        <ul class="navbar-tabs">
+          {% for t in types %}
+          <li>
+            <a{% if t.number==tid %} class="active"{% endif %} href="../{{ t.number }}/0">{{t.text}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="main container clearfix">
+      <div id="second">
+        <h2>{{ title }}</h2>
+        <ul class="namelist">
+          {% for l in list %}
+          {% if l.userid %}
+          <li>
+            <img src="/avatar/{{ l.userid }}">
+            <div class="namelist-info">
+              <a href="/n/index.html#!user?userid={{ l.userid }}"><strong>{{ l.userid }}</strong></a>
+              <small>{{ l.intro }}</small>
+            </div>
+          </li>
+          {% else %}
+          {% if l %}
+          <li class="sep">{{ l }}</li>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      <div id="primary">
+        <ul class="nodes clearfix">
+          {% for n in nodes %}
+          {% if n.fake %}
+          <li class="{% if loop.counter==1 %}first {% endif %}sep">{{ n.text }}</li>
+          {% else %}  
+          <li{% if n.number==nid %} class="on"{% endif %}>
+            <a href="./{{ n.number }}">{{n.text}}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

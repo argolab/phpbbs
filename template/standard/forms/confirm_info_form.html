@@ -1,0 +1,71 @@
+
+<div id="auth-form-title">
+    请尽可能填写完整，以确保信息无错漏。
+</div>
+<form id="confirm-info-form" method="post" action="/auth/2/" >
+    <table id="confirm-info-table">
+        <tr>
+            <td>真实姓名：</td>
+            <td><input type="text" name="realname" maxlength="6" class="input-text"></td>
+        </tr>
+        <tr>
+            <td>专业：</td>
+            <td><select name="major">
+                    {% for d in dept %}
+                    <option value="{{ d }}">{{d}}</option>
+                    {% endfor %}
+                    </select>
+            </td>
+        </tr>
+        <tr> 
+            <td>出生日期：</td>
+            <td>
+                <select id="birth-year" name="birth-year"></select>年
+                <select id="birth-month" name="birth-month"></select>月
+                <select id="birth-day" name="birth-day"></select>日
+            </td>
+        </tr>
+        <tr>
+            <td>学号：</td>
+            <td><input type="text" name="student_id" class="input-text"/></td>
+        </tr>
+        <tr>
+            <td>电子邮件：</td>
+            <td><input type="text" maxlength="100" name="email" class="input-text"/></td>
+        </tr>
+        <tr>
+            <td>联系电话：</td>
+            <td><input type="text" maxlength="20" name="phone" class="input-text"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" class="submit-confirm common-button" value="提交"/>
+</td>
+        </tr>
+
+    </table>
+    <input type="hidden" name="year" value="{{ year }}" class="input-text"/>
+</form>
+
+<script type="text/javascript">
+
+    birthyear = $("#birth-year");
+    birthmonth = $("#birth-month");
+    birthday = $("#birth-day");
+
+for(i=1999; i>=1920; i--)
+{
+    birthyear.append("<option value='"+i+"'>"+i+"</option>");
+}
+for(i=1; i<=12; i++)
+{
+    birthmonth.append("<option value='"+i+"'>"+i+"</option>");
+}
+for(i=1; i<=31; i++)
+{
+    birthday.append("<option value='"+i+"'>"+i+"</option>");
+}
+
+ajax_confirm_info_form();
+
+</script>

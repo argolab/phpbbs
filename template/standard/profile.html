@@ -1,0 +1,70 @@
+{% extends 'standard/base.html' %}
+
+{% block content %}
+ <div class="header-title">
+    &laquo; 查询用户信息
+  </div>
+<div id="profile-content">  
+  <div id="profile-banner">
+      {{user.userid}} 的信息：
+  </div>
+  <ul id="info-column">
+    <li>
+      <div class="myface-row">
+        {% if user.myface %}
+        <img class="user-icon" src="{{user.myface}}"  alt="{{user.userid}}"/> 
+        {% else %} 
+        <img class="user-icon" src="/images/gcc.jpg"  alt="default-user-icon"/> 
+        {% endif %}
+      </div>    
+      </li>
+    <li>{{user.userid}} ({{user.username}})  共上站 {{user.numlogins}} 次，发表大作 {{user.numposts}} 篇  <br/>
+    </li>
+    <li>
+      上次于 [<font class="c32"> {{user.lastlogin}} </font>]  到本站一游 <br/>
+    </li>
+    <li>
+      信箱： [<font class="c33">{% if user.has_mail %}⊙{% endif %}</font>] 
+      生命力： [{{user.life_value}}]<br/> 
+    </li>
+    {% if user.special_title %}
+    <li>称号：<font class="c36">★{{user.special_title}}</font><br/></li>
+    {% endif %}
+    <li>累计在线时间： <font class="c32">{{ user.stay }}</font></li>
+    <li>星座： [<font class={% if user.male%}"c36"{% else %} "c35"{% endif %}>{{user.constellation}}</font>] <br/> </li>
+    {% if user.sysop %}
+    <li>真实姓名：{{ user.realname }}  <br/> </li>
+    {% endif %}  
+    <li>
+      {% if user.online %}
+      目前在站上，当前状态：<font class="c32"> {{user.mode}} </font> <br/> 
+      {% else %}
+      该用户目前不在站上，上次离站时间 [<font class="c32"> {{user.lastlogout}} </font>]
+      {% endif %}  
+      <br/>
+    </li>
+    <li>
+      {% if user.plan %}
+      <font class="c32">个人说明档：</font><br/>
+      {{user.plan | safe }} <br/>
+      {% else %}
+      <font class={% if user.male%}"c36"{% else %} "c35"{% endif %}> 没有个人说明档啦~ </font><br/>
+      {% endif %}
+    </li>
+  </ul>
+</div>
+<div id="profile-bottom">
+  <div id="add-friend-{{user.userid}}" href="javascript:;" class="common-button">加{% if user.male%}他{% else %}她{% endif %}为好友</div>
+  <div id="write-mail" href="javascript:;" class="common-button">  写信问候</div>  
+  <div id="add-reject-{{user.userid}}"  href="javascript:;" class="common-button">设为坏人</div>
+
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+profile_init();
+</script>
+{% endblock %}

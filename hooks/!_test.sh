@@ -1,0 +1,1 @@
+echo "HOOKS OK!";

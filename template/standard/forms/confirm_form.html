@@ -1,0 +1,34 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div id="confirm-column">
+    <div class="header-title">校友信息验证 &raquo;&raquo; </div>
+    <div id="select-year-form">
+        <div class="graduate">
+            请选择您的毕业年份：
+            <select id="select-year" name="graduate-year">
+                <option value=""></option>
+            </select>
+            年
+        </div>
+    </form>
+
+    <div id="confirm-info-column">
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+
+select= $("#select-year");
+for(i=1995; i<=2008; i++)
+{
+    select.append("<option value='"+i+"'>"+i+"</option>");
+}
+
+try_time = 0;
+
+ajax_confirm_info();
+
+</script>
+{% endblock %}

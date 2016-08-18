@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>{% block title %} 逸仙时空 Yat-sen Channel {% endblock %} </title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      if (!document.getElementById("content-column")) {
+        window.location = "/#!" + window.location.pathname;
+      }
+    </script>
+    {% block content %} {% endblock %}
+    {% block script %} {% endblock %}
+  </body>
+</html>

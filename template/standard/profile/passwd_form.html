@@ -1,0 +1,20 @@
+{% extends 'standard/base2.html' %}
+
+{% block content %}
+<div id="setting-banner">
+  修改密码
+</div>
+<div id="passwd-setting">
+  <form method="POST" id="passwd-form" action="/profile/setting/passwd/">
+    <ul>
+      <li> 输入旧密码：<input  type="password" name="oldpasswd"/></li>
+      <li> 输入新密码：<input  type="password" name="newpasswd"/></li>
+      <li> 确认新密码：<input  type="password" name="confirm"/> </li>
+    </ul>
+  </form>
+  <div id="setting-button">
+    <input id="id_save_button" type="button" onclick="javascript:ajaxSettingSubmit();" value="保存" />
+  </div>
+</div>
+
+{% endblock %}

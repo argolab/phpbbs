@@ -1,0 +1,62 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div class="header-title">
+  <span> 信件箱 &raquo;</span>
+</div>
+
+<div id="mail-container">
+  <div class="mail-control">
+
+    <div class="mail-button-group">
+    <div id="mail-page-switch">
+      共{{total}}封邮件  从第{{from}}封到第{{to}}封
+      <div class="mail-button" id="mail-prev" jump="{{prev}}">
+	    <img src="/images/cleardot.gif"  />
+      </div>
+      <div class="mail-button" id="mail-next" jump="{{next}}">
+	    <img src="/images/cleardot.gif" />
+      </div>
+    </div>
+
+    
+      <div class="common-button" id="mail-checkall">
+	    <input type="checkbox" />全选
+	    <div class="gg"></div>
+      </div>
+      <label class="common-button" id="mail-delete">删除</label>
+      <!-- <label class="common-button" id="mail-merge">合集</label> -->
+      <label class="common-button" id="mail-markread">标记为已阅读</label>
+    </div>
+  </div>
+  <table id="mail-table">
+    <colgroup span="3" style="color:blue"> </colgroup>
+    {% for m in mail %}
+    <tr class="mail-row">
+      <td class="mail-check"><input type="checkbox" value="{{ m.index }}"/></td>
+      <td class="mail-reply">{% if m.flag > 31 %}&crarr;{% endif %}</td>
+      <td class="mail-owner">{{ m.owner }}</td>
+      <td id="mail-entry-{{ m.index }}" class="{% if m.flag == 0 %}mail-new{% endif %} mail-title">{{ m.title }}</td>    
+      <td class="mail-time">{{ m.filetime }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <div class="mail-used-size">
+    已用空间：{{ used_size }} / {{ total_size }}
+  </div>
+  <div class="mail-control">
+    <label class="common-button" id="write-mail">写新信件</label>
+  </div>
+
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  mail_list = [];
+  {% for m in mail %}
+  mail_list.push('{{ m.index }}');
+  {% endfor %}
+  initMailControl();
+</script>
+{% endblock %}

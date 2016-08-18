@@ -1,0 +1,48 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+
+<div id="wiki-page">
+<div id="wiki-tabs" class="ccolumn-widget">
+  <div class="ccolumn-widget-header">      
+    {% if wiki_name == "faq" %}
+    <span class="header-title">常见问题 &raquo;</span>
+    {% endif %}
+    {% if wiki_name == "hall" %}
+    <span class="header-title">Argo 小礼堂 &raquo;</span>
+    {% endif %}    
+  </div>
+  {% if perm_edit %} 
+  <a class="wiki-edit-button" href="javascript:;" id="edit-{{wiki_name}}-dir">编辑列表 </a>
+  {% endif %}
+  <ul>
+    {% for term in term_list %}
+    <li><a href="#{{ term.term_name }}">{{ term.exp }} </a></li> 
+    {% endfor %}
+  </ul>
+
+  {% for term in term_list %}
+  <div id="{{ term.term_name }}">
+    <ul>
+    <li>{{ term.content | safe }} </li>
+    </ul>
+    {% if perm_edit %} 
+    <a class="wiki-edit-button" href="javascript:;" id="edit-{{ term.term_name}}">
+      编辑内容
+    </a>
+    {% endif %} 
+  </div> 
+  {% endfor %}
+  
+</div>
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+<script type="text/javascript">
+  $('#wiki-tabs').tabs();
+  initWiki("{{wiki_name}}");
+</script>
+{% endblock %}

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN">
+  <head>
+    <!--[if lt IE 8 ]> <script> location="/p/check.html"; </script> <![endif]-->
+    <meta charset="UTF-8" />
+    <meta name="resource-type" content="document" />
+    <meta name="distribution" content="global" />
+    <meta name="author" content="Argo" />
+    <meta name="generator" content="argo@mail.sysu.edu.cn" />
+    <meta name="copyright" content="Copyright (c) 2008-2012 argo. All Rights Reserved." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="rating" content="general" />
+    <link href="http://argo.sysu.edu.cn/newhome/2/style.css" rel="stylesheet" type="text/css" />
+    <link href="http://argo.sysu.edu.cn/p/register.css" rel="stylesheet" type="text/css" />
+<!--    <link href="http://argo.sysu.edu.cn/newhome/gray.css" rel="stylesheet" type="text/css" /> -->
+    <title>逸仙时空BBS欢迎您</title>
+    <meta name="keywords" content="逸仙时空, BBS, 中山大学, 学生BBS, argo, 电子公告版, 中东, 珠海校区" />
+    <meta name="description" content="中山大学逸仙时空BBS" />
+    <script type="text/JavaScript" src="http://argo.sysu.edu.cn/n/js/lib/jquery.js"></script>    
+    <script type="text/JavaScript" src="http://argo.sysu.edu.cn/p/register.js"></script>    
+  </head>
+
+  <body>
+
+    <div class="topbar">
+      <div class="container">
+        <a href="#" class="brand">逸仙时空</a>
+	<span class="topbar-menu!">
+      <a href="/n/index.html#!focus">热点关注</a>
+      <a href="/n/index.html#!section">探索看版</a>
+	</span>
+      </div>
+    </div>
+
+    <div class="container clearfix">
+      <form onsubmit="return submit_register();">
+        <h3>入住到逸仙时空
+          <small>&nbsp; <span class="step-over">1. 注册帐号</span>
+            --> 2. 激活帐号 --> 3. 畅游逸仙</small></h3>
+        <div id="alert"></div>
+        <fieldset>
+          <div>
+            <label for="userid">* 给自己起一个有性格的id：</label>
+            <div class="input-group">
+              <input type="text" maxlength="12" size="12" name="userid"/>
+              <span class="descr">(2-12字符, 必须全为英文字母，
+                用于登录和身份帐号标识)</span>
+            </div>
+          </div>
+          <div>
+            <label for="pass1">* 密码：</label>
+            <div class="input-group">
+              <input type="password" name="pass1" size="12" maxlength="12"/>
+              <span class="descr">(4-12字符)</span>
+            </div>
+          </div>
+          <div>
+            <label for="pass2">* 确认输入密码：</label>
+            <div class="input-group">
+              <input type="password" name="pass2" size="12" maxlength="12"/>
+            </div>
+          </div>
+          <div>
+            <label for="username">* 起一个昵称：</label>
+            <div class="input-group">
+              <input type="text" name="username" size="20" maxlength="19"/>
+              <span class="descr">(2-19字符, 中英文不限)</span>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div>
+            <label for="realname">* 真实姓名：</label>
+            <div class="input-group">
+              <input type="text" name="realname" size="20"/>
+              <span class="descr">(请用中文, 至少2个汉字)</span>
+            </div>
+          </div>
+          <div>
+            <label for="dept">* 系级或工作单位：</label>
+            <div class="input-group">
+              <input type="text" name="dept" size="40"/>
+              <span class="descr">(至少6个字符)</span>
+            </div>
+          </div>
+          <div>
+            <label for="address">* 详细通讯地址：</label>
+            <div class="input-group">
+              <input type="text" name="address" size="40"/>
+              <span class="descr">(至少6个字符)</span>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div>
+            <label>* 您的出生年月:</label>
+            <div class="input-group">
+              <input type="text" name="year" size="4" maxlength="4"/>年
+              <input type="text" name="month" size="2" maxlength="2"/>月
+              <input type="text" name="day" size="2" maxlength="2"/>日
+            </div>
+          </div>
+          <div>
+            <label>* 性别：</label>
+            <div class="input-group">
+              <input type="radio" name="gender" value="0"
+                     checked="1" border="0"/>男
+              <input type="radio" name="gender" value="1" border="0"/>女
+              <span class="descr">(默认将会公开你的性别)</span>
+            </div>
+          </div>
+          <div>
+            <label for="email">* 常用联系邮箱：</label>
+            <div class="input-group">
+              <input type="text" name="email" size="40"/>
+              <span class="descr">(我们不会公开此邮箱)</span>
+            </div>
+          </div>
+        </fieldset>
+        <div class="input-group">
+          <span class="descr">
+            逸仙时空是一个真实的线上社区。我们严格控制用户准入，<br/>
+            实名认证，但你的帐号仍然是匿名的。以上注册资料都是必须的，<br/>
+            但你的真实姓名，院系单位，通讯地址并不会公开，仅作备案存档使用。<br/>
+            你的星座会被公开，我们有可能会在您生日当天给你惊喜。<br/>
+            <br/>
+          </span>
+          <button class="btn">提交注册单</button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="footer">
+      <div class="container">
+        <a href="http://argo.sysu.edu.cn/m/">移动版</a>
+	<a href="telnet://bbs.sysu.edu.cn/">telnet</a>
+	| <small><a href="http://argo.sysu.edu.cn/CTerm-argo.zip">下载cterm
+        argo</a></small> <br/>
+        版权所有： 中山大学逸仙时空
+        <a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/">帮助</a>
+        <a href="http://bbs.sysu.edu.cn/n/index.html#!board?boardname=Suggest">建议</a>
+        <a href="https://github.com/argolab">项目源码</a>
+      </div>
+    </div>
+
+    <script type="text/JavaScript" src="http://argo.sysu.edu.cn/newhome/2/main.js"></script>
+
+    <script language="JavaScript" type="text/javascript">
+      var Ipv6_Js_Server = (("https:" == document.location.protocol) ? "https://" : "http://");
+      document.write(unescape("%3Cscript src='" + Ipv6_Js_Server + "www.ipv6forum.com/ipv6_enabled/sa/SA1.php?id=1844' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36510718-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </body>
+</html>

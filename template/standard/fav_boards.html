@@ -1,0 +1,63 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div id="path" class="header-title">
+  预定讨论区 &raquo;
+</div>
+<div id="board-list">
+  <ul>
+    <li class="board-list-header">
+      <div class="bflag">状态</div>
+      <div class="btitle-row">讨论区</div>
+      <div class="bfname">英文描述</div>
+      <div class="btotal">文章数</div>
+      <div>最后更新</div>
+    </li>
+    {% for board in boards %}
+    <li class="board-list-body{% cycle ' board-list-bgcolor-blue' '' %}">
+      {% if board.unread %}
+      <div class="bflag post-new">◆</div>
+      {% else %}
+      <div class="bflag">◇</div>
+      {% endif %}
+
+	    <div  class="btitle-row">
+          <div class="btitle{% if board.unread %} post-new{% endif %}">{{ board.title }}
+            <span class="bfilename">({{ board.filename }})&raquo;</span>
+          <div class="bfname">{{ board.filename }}</div>
+          </div>
+	    {% if board.total_today %}
+	    <span class="btoday">(<span class="btoday_count">{{board.total_today}}</span>)</span>
+	    {% endif %}
+	    <a href="javascript:;" id="{{board.filename}}" alt="移除收藏该版" class="button del-button">取消</a>        
+      </div>        
+      <div class="btotal{% if board.unread %} post-new{% endif %}">{{ board.total }}</div> 
+      <div class="blast">
+	    {% if board.lastpostfile %}
+	    <a href="/{{board.filename}}/{{board.lastfilename}}/">{{ board.lastpostfile }} </a>
+	    <br />
+	    <span class="blastauthor"> {{ board.lastauthor }} [{{ board.lastpost }}] </span>
+	    {% else %}
+	    ---
+	    {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<div id="id_addfav">
+  <label for="addfav"> 收藏新的讨论区： </label>
+  <input class="inputtext" type="text" name="addfav" value="" />
+  <div class="common-button">确定</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+ {% if www.def_mode %}
+ def_mode = 1;
+ {% else %}
+ def_mode = 0;
+ {% endif %}
+ renderBoardList();
+ initFav();
+</script>
+{% endblock %}

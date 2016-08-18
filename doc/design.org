@@ -1,0 +1,129 @@
+
+* 设计
+** Background
+   - http协议未实现完整，部分相关Bug未修复
+   - c代码中夹杂着 html，前端开发困难
+   - 文件 I/O 操作遍步代码各处
+   - sanry httpd 独占了 80 端口
+   - ...
+
+** Principle
+   - 关注点分离
+   - 安全性
+
+** URL Dispatcher
+
+   调用：/index.php
+   实现：common/class-router.php
+   配置：common/urls.conf.php
+
+   利用规则定义访问，即使 url 更具有可读性，也保证所访问的每个地址都在可
+   控范围以内。所有的非静态页面都通过 index.php 访问，经过一系列的初始化
+   根据规则转到预定义函数。
+   规则举例：
+   '{^/a/checkmail/?$}' => array('common/ajax-get.php', 'a_check_mail')
+   若 url 路径匹配正则表达式 ^/a/checkmail/?$，则调用 common/ajax-get.php
+   中的 a_check_mail 函数进行处理。
+
+   其中重定向到 index.php 需在 web server(Nginx) 中加以控制。
+
+** Template Engine
+   一直在想怎么做到尽可能的 php 代码与 html 分离，嵌套 php 输出函数，简
+   单的字符串替换，写过部分代码，用过几个第三方小型的引擎，在一次尝试中
+   无意搜索到了很接近 django 语法的H2O引擎，经过测试比较后拿来使用了。这
+   个引擎的使用比较简单，初始化一个对象，设置好模板地址和渲染的数据即可。
+   简单一个例子。
+   php代码：
+   $tpl = new H2o('/path/to/example.html');
+   $buf = $tpl.render(array('title' => 'welcome', 'content' => 'hello'));
+   echo $buf;
+   html代码：
+   <head>
+     <title> {{ $title }} </title>
+   </head>
+   <body>
+     {% if $content %}
+     <div>{{ $content }}</div>
+     {% endif %}
+   </body>
+   在html代码的编写中，可以用到{% %}和{{ }}括号对，前者称为block，后者
+   tag，block可以做到循环、条件、继承等，而tag除了字符替换还有filter的
+   功能，引擎的良好利用可以很好地实现代码分离和重用，当然也会有性能损
+   失的折衷问题。
+   更详细的使用请参考其样例和[[http://wiki.github.com/speedmax/h2o-php/][文档]]。
+   
+   
+** Session
+   用户的在线状态仅由共享内存（utmpshm）中的信息提供，指定时间内无动作
+   就使其"离线"，cookies 中提供与内存中的映射关系，能够attach上为"在线"。
+   于是去掉了原来 server 进程与 client 的映射关系，server 程序无状态化。
+
+** Permission
+   原 BBS 中到处都会出现权验证 HAS_PERM，和 I/O 操作一样令人深恶痛绝。为
+   了更清晰地进行访问控制，完全将权限处理部分移到 PHP 中，并加以封装。使
+   用流程如下
+   permit -> process -> filter
+   permit 阶段判断是否允许用户的访问，需要用户有显示该页面的权限；
+   process 阶段为数据交互阶段，主要为调用 PHP 扩展获取所需要的数据；
+   filter 阶段再根据用户权限将数据中不该显示的部分过滤掉。
+   举个例子，我们使用收藏夹，由于收藏夹仅限登陆用户使用，permit 阶段就为
+   登陆态的判断，失败后提示需要登陆（或该页不存在）。之后 process 阶段是
+   读取用户home目录的收藏夹记录文件，filter 再将一些已不能再显示的版块删
+   掉（比如普通用户校外登陆看不到Diary版）。将自理过程分为 process 与
+   filter 两部分的好处是扩展中不需要处理权限问题，带来的问题是目前可以忽
+   视的效率损失（数据量不大）。
+
+   这实则是代码逻辑的问题。。
+
+** 目录结构
+*** {SRC_HOME}/argo_ext/
+    核心部分，PHP的c扩展的代码，主要作用为封装 I/O 操作，共享内存控制等。
+    原则：面向BBS数据，避免全局变量。每个源码文件中都是对同一类数据的操
+    作，编写过程中尽量提取与 telnet 代码的公共部分。
+    虽已有一些注释加以理解，但维护最好先学习 php extension 的编写，愿意
+    学习 php 的实现就更好了。。
+
+*** {SRC_HOME}/common/
+    对扩展的进一步封装，由面向数据变成面向应用的基础函数与类。
+    比如在扩展中存在ext_check_password, ext_attach_utmpshm等操作注册信息
+    文件或共享内存的函数，在这里就进一步封装成了User::Login等。
+    除了更助于前台代码编写，另一个目的是为未来更换底层存储方式做铺垫。
+    （文件使用数据库？跨机器存储？……）
+    该处还有较多的无需生成html的数据接口，供ajax使用。
+*** {SRC_HOME}/bbs/
+    逻辑层，使用argo_ext和common中的函数获取bbs的数据，载入 template 目
+    录的相应模板，生成最终的页面。
+*** {SRC_HOME}/static/
+    静态文件，包括javascript/css，用到了 jQuery，尽量减轻服务器的负担，
+    当有许多方法可以达到同一个目的时，优先使用最简单的实现方式，然后是
+    与用 PHP 进一步处理数据相比，建议倾向于选择 JavaScript，如秒数对可
+    读日期的转换。
+
+*** {SRC_HOME}/template/
+    模板文件，原则: Don't Repeat Yourself.
+
+** 移动版
+
+*** 目的
+
+    测试与促进编写php扩展，也是一个 get involved 的入口，降低维护的门槛。
+
+*** 源代码分布
+    common/
+
+    mobile/
+    ├── m_index.php
+    ├── m_read.php
+    └── ...
+
+    template/
+    ├── mobile
+    │   ├── m_index.html
+    │   ├── m_read.html
+    │   └── ...
+
+    static/
+    ├── mobile
+    │   ├── style.css
+    │   └── script.js
+

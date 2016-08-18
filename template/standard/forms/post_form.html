@@ -1,0 +1,51 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<div id="do-post">
+  <h1>在 &laquo;{{board.title}}&raquo; 版发表新帖子：</h1>
+  <form method="POST" id="post-form" action="/post/{{command}}/{{board.filename}}/{{articleid}}" enctype="multipart/form-data">
+    <div class="top-row">    
+      <div class="title-row">
+        <label for="id-title">标题：</label>
+        <input id="id-title" type="text" name="title" value="{{title}}" /> 
+      </div>    
+      <div id="signature-row">
+        <input type="radio" name="signature" value="0"/>不使用签名 <br/>
+        <input type="radio" name="signature" value="1" checked="1"/>随机签名 <br/>
+        <input type="radio" name="signature" value="2">使用第
+        <input type="text" name="num-signature"/> 个签名
+      </div>        
+    </div>     
+
+    <div class="content-row">
+      <textarea id="id-content" name="content" >{{content | safe }}</textarea>
+    </div>
+    <div class="button-row">
+      <input id="id-submit" type="submit" value="发表" />
+      <label >按Ctrl + Enter 快速提交</label>            
+    </div>    
+      
+    {% if anonymous %} 
+    <div id="anonymous-row">
+      <input type="checkbox" name="anonymous" checked="checked"/>匿名</div>
+    {% endif %}
+    <div id="reply-notify">
+      <input type="checkbox" name="reply-notify" />回复提醒 
+    </div>
+    {% if allow_attach %}
+    <div id="upload-row">
+      <input type="file"  name="attach" id="upload-file" />
+      <label id="upload-filename"></label>
+      <label for="upload-file" class="common-button" id="upload-button">上传附件</label> 
+    </div>
+    {% endif %}    
+  </form>
+</div>
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  currBoard = "{{board.filename}}";
+  lastKey = 0;
+  ajaxPostForm("{{command}}", "{{articleid}}");
+</script>
+{% endblock %}

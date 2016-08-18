@@ -1,0 +1,32 @@
+{% extends 'standard/base2.html' %}
+{% block content %}
+<div id="setting-banner">
+  www参数设定
+</div>
+<div id="www-setting">
+  <form method="POST" id="www-form" action="/profile/setting/www/">
+    <table width="" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+	<th>一屏显示的文章行数(10-40)：</th>
+	<td><input  type="text" name="t_lines" maxlength="2" value="{{www.t_lines}}"/></td>
+      </tr>
+      <tr>
+	<th>链接识别 (0识别, 1不识别)：</th>
+	<td><input  type="text" name="link_mode" maxlength="1"  value="{{www.link_mode}}"/></td>
+      </tr>
+      <tr>
+	<th> 缺省模式 (0一般, 1主题)：</th>
+	<td><input  type="text" name="def_mode" maxlength="1" value="{{www.def_mode}}"/></td>
+      </tr>
+      <tr>
+	<th> 好友动态关注时间 (2~7天)：</th>
+	<td><input  type="text" name="friend_time" maxlength="1" value="{{www.friend_time}}"/></td>
+      </tr>
+    </table>
+  </form>
+  <div id="setting-button">
+    <input id="id_save_button" type="button" onclick="javascript:ajaxSettingSubmit();" value="保存" />
+  </div>
+</div>
+
+{% endblock %}

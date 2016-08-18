@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>{% block title %} 逸仙时空 Yat-sen Channel {% endblock %} </title>
+
+    {% block css %}
+    <link href="/css/jquery-ui-1.8.7.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/css/index.css" rel="stylesheet" type="text/css" />
+    <link href="/css/profile.css" rel="stylesheet" type="text/css" />
+    {% endblock %}
+    <script type="text/javascript"> currUser = "{{userid}}"; </script>
+    <script type="text/javascript" src="/js/lib/jquery.js"></script>
+    <script type="text/javascript" src="/js/lib/require.js"></script>
+    <script type="text/javascript" src="/js/argo.js" ></script>
+  </head>
+  <body class="has-left-column">
+    <div id="notify-pane"></div>
+    <div id="green-bar"></div>
+    <div id="global-container">
+      <div id="top-bar">
+	    <div id="top-logo">
+         	<a href="/main/"><img src="/images/argo.png" class="" alt="逸仙时空" /></a>
+	 </div>
+	    <div id="top-nav">
+	      {% if login %}
+          <a id="top-profile" href="/profile/setting/" >设置</a> | 
+          {% if not_auth %}
+          <a href="/auth/">激活 </a> | 
+          {% endif %}
+          <a id="top-logout" href="/logout/">退出</a>
+	      {% else %}
+	      <a id="top-login" href="/login/">登录</a> | <a id="top-reg" href="javascript:;">注册</a>
+          {% endif %}
+
+	    </div>
+      </div>
+      <div class="to-top-wrapper">
+        <span class="to-top">top↑</span>
+      </div>
+      <div id="main-wrapper">
+	{% block main %}
+	{% endblock %}	
+    <div id="footer">
+      <div id="online-number">当前在线  [<label class="c34"></label>]  人   </div>
+      <div id="all-rights-reserved">逸仙时空 Yat-sen Channel , Design & dev by <a href="/profile/query/gcc/">gcc</a> and <a href="/profile/query/Cypress/">Cypress</a>
+      </div>
+      </div>    
+	</div>
+      
+    </div> <!-- end global-container -->
+    <!-- footer -->
+    
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

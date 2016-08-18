@@ -1,0 +1,17 @@
+{% extends 'standard/base2.html' %}
+{% block content %}
+<div id="setting-banner">
+  修改个人说明档
+</div>
+<div id="plan-setting">
+  <form method="POST" id="plan-form" action="/profile/setting/plan/">
+    <div class="content-row">
+    <textarea id="id-content" name="plan" rows="15" cols="70" >{{plan | safe }}</textarea>
+    </div>
+  </form>
+  <div id="setting-button">
+    <input id="id_save_button" type="button" onclick="javascript:ajaxSettingSubmit();" value="保存" />
+  </div>
+</div>
+
+{% endblock %}

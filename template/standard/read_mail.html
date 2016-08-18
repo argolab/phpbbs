@@ -1,0 +1,19 @@
+{% extends 'standard/base.html' %}
+{% block content %}
+<section id="read-mail">
+  <div id="mail-content"> 
+    {{ content | safe }}
+  </div>  
+  <div class="mail-control">
+    <label class="common-button mail-reply-button" id="reply-mail-{{index}}">
+      »Ø¸´ÐÅ¼þ
+    </label>
+  </div>
+</section>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  register_reply_mail('{{index}}');
+</script>
+{% endblock %}

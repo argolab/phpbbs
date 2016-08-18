@@ -1,0 +1,21 @@
+目前argo_ext的结构
+src/include:
+全局头文件
+src/libsys:
+底层函数，几乎是telnet code的libSystem
+src/libbbs:
+bbs函数，可以和telnet code共用的bbs相关函数部分
+src/libhttp:
+http端特定的函数
+src/src:
+php扩展所需要的函数
+src/include
+供src/src/所用的头文件
+
+如何增加一个新函数
+在src/src/中的文件增加PHP_FUNCTION
+参考src/include相应的头文件其它函数增加声明，如果是新增文件也许还会改
+动php_fe_all.h
+将php_fe系列的头文件分开可能不如单独一个文件好，开始是为将来可能函数变
+多考虑的。
+如果有增加代码文件需要修改config.m4并重新使用phpize生成configure

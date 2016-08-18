@@ -1,0 +1,299 @@
+html {
+    color: #333;
+    overflow-y: scroll;
+    background: #fff;
+}
+
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,fieldset,lengend,button,input,textarea,form,th,td {
+    margin: 0;
+    padding: 0;
+}
+
+body,button,input,select,textarea {
+    font: 16px/1.6 Tahoma,Arial,"\5b8b\4f53",sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address,cite,dfn,em,var {
+    font-style: normal;
+}
+
+code,kbd,pre,samp,tt {
+    font-family: "Courier New",Courier,monospace;
+}
+
+small {
+    font-size: 12px;
+}
+
+ul,ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+abbr[title],acronym[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+q:before,q:after {
+    content: '';
+}
+
+:focus {
+    outline: 0;
+}
+
+legend {
+    color: #000;
+}
+
+fieldset,img {
+    border: none;
+}
+
+button,input,select,textarea {
+    font-size: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    *color: #fff;
+}
+
+img {
+    -ms-interpolation-mode: bicubic;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.clr {
+    *zoom: 1;
+}
+
+.clr:after {
+    display: block;
+    clear: both;
+    height: 0;
+    content: "\0020";
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.locate {
+    position: relative;
+}
+
+.gray {
+    color: #666;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+
+a:hover {
+    color: #ff7300;
+}
+
+/*============================================================*/
+
+body{
+}
+
+.brand{
+    float: right;
+}
+
+.brand a{
+    float: right;
+    padding-top: 7px;
+    text-decoration: none;
+    padding-bottom: 1px;
+    padding-right: 10px;
+    color: #589358;
+}
+
+.container{
+    width: 700px;
+    margin: 0 auto;
+}
+
+.topic{
+    padding-bottom: 60px;
+    background-color: #fafafa;
+}
+
+.reply{
+    padding-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+    margin-left: -44px;
+    padding-left: 44px;
+}
+
+.replys{
+    border-top: 1px solid #cfcfcf;
+    padding-top: 28px;
+    background: #eee;
+}
+
+.avatar{
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    border-radius: 2px;
+    left: -44px;
+}
+
+.topic h2{
+    font-size: 36px;
+    line-height: 1;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    color: #111;
+}
+
+.userid{
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    line-height: 26px;
+    padding-bottom: 6px;
+    display: block;
+    color: #888;
+}
+
+.topic .userid{
+    margin-left: 6px;
+}
+
+.header{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.bottom{
+    margin: 10px 0;
+    color: #777
+}
+
+.markup{
+    word-wrap: break-word;
+}
+
+.content{
+    word-wrap: break-word;
+    overflow: auto;
+}
+
+.short .header,
+.short .bottom,
+.short .content{
+    line-height: 32px;
+    margin: 0;
+}
+
+.short .header{
+    float: left;
+    min-width: 50px;
+    padding-right: 10px;
+    background: #eee;
+}
+
+.short .bottom{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #eee;
+    padding-left: 10px;
+}
+
+.short .content{
+    float: left;
+    width: 100%;
+    white-space: normal;
+    overflow: hidden;
+    margin-left: 10px;
+    margin-right: -200px;
+    height: 32px;
+}
+
+.short .markup{
+    height: 32px;
+    overflow: hidden;
+    white-space: normal;
+}
+
+.footer{
+    background: #eee;
+    padding: 20px 0;
+    color: #999;
+    text-align: center;
+}
+
+.container-inner{
+    padding: 0 10px;
+}
+
+.postquote{
+    font-size: 12px;
+    line-height: 15px;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    margin: 10px;
+}
+
+.postquote-header{
+    color: #553355;
+}
+
+.postquote-content{
+    color: #724472;
+    margin: 5px;
+}
+
+@media (max-width: 720px) {
+    .container{
+        width: 100%;
+    }
+}
+
+/* #589358 */
+/* 120 40 58 */
+
+.time{
+    font-size: 12px;
+}
